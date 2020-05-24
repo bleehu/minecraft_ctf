@@ -10,8 +10,10 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y ssh
 RUN apt-get install -y openjdk-8-jre
 RUN apt-get install -y nano
+RUN apt-get install -y sudo
+RUN apt-get update && apt-get upgrade -y
 
-RUN useradd -m system -p "admin"
+RUN useradd -m system
 RUN usermod -aG sudo system
 
 COPY startup.sh /home/batman/startup.sh

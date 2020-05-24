@@ -21,3 +21,15 @@ echo "harley:$FLAG1" | chpasswd
 echo "joker:$FLAG2" | chpasswd
 echo "batman:$FLAG5" | chpasswd
 echo "gordon:$FLAG3" | chpasswd
+
+
+touch /home/system/server/latest.log
+touch /home/harley/server.log
+chown harley /home/harley/server.log
+chmod g+w /home/harley/server.log
+chgrp system /home/harley/server.log
+chmod +r /home/harley/server.log     
+tail -f /home/system/server/latest.log >> /home/harley/server.log &
+
+
+java -Xmx1024M -Xms1024M -jar /home/system/server/server.jar nogui

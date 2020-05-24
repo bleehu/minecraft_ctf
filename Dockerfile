@@ -16,13 +16,12 @@ RUN apt-get update && apt-get upgrade -y
 RUN useradd -m system
 RUN usermod -aG sudo system
 
-COPY startup.sh /home/batman/startup.sh
+COPY startup.sh /home/system/server/startup.sh
 
-COPY server.jar /home/system/server/server.jar
+COPY server/ /home/system/server/
+RUN chown -R system /home/system/server/
+
 COPY sshd_config /etc/ssh/sshd_config
-
-RUN chmod +x /home/batman/startup.sh
-RUN /home/batman/startup.sh
 
 #ssh
 EXPOSE 22
@@ -33,5 +32,5 @@ EXPOSE 25565
 #minecraft server commands
 EXPOSE 25566
 
-ENTRYPOINT service ssh start && bash
-#ENTRYPOINT java -Xmx1024M -Xms1024M -jar minecraft_server.1.15.2.jar nogui 
+#ENTRYPOINT service ssh start && bash
+ENTRYPOINT  /home/system/server/startup.sh && bash
